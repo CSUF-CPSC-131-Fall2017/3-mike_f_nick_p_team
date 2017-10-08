@@ -1,17 +1,22 @@
 #include "Webpage.h"
 
+//default constructor
 Webpage::Webpage() {
-    // TO BE COMPLETED
+	url = "www.---------.com";
+	time = 0;
 }
 
+//initialized constructor
 Webpage::Webpage(const string& webpageURL, const time_t& timeVisited) {
-    // TO BE COMPLETED
+	// TO BE COMPLETED
+	url = webpageURL;
+	time = timeVisited;
 }
 
 string Webpage::getURL() {
-    // TO BE COMPLETED
+	return url;
 }
 
 time_t Webpage::getTime() {
-    // TO BE COMPLETED
+	return time;
 }
