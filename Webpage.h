@@ -11,7 +11,6 @@ public:
     time_t getTime();
 
 private:
-    // Add private member variables for your class along with any
-    // other variables required to implement the public member functions
-    // TO BE COMPLETED
+   string webAddress;
+   time_t timeVisited;
 };
