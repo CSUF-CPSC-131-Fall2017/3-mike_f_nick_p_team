@@ -9,6 +9,7 @@ public:
 	Webpage(const string& webpageURL, const time_t& timeVisited);
 	string getURL();
 	time_t getTime();
+	void setInfo(const Webpage&);
 
 private:
 	// Add private member variables for your class along with any
