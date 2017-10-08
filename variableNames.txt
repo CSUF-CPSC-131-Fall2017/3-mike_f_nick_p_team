@@ -1,0 +1,25 @@
+IN WEBPAGE.h
+    time_t time...
+        used to store time at which the website was visited
+    string url...
+        used to store url of the site visited
+   
+IN BROWSERHISTORY.h
+    IN CLASS DNODE
+        DNode next...
+          used to access next element
+        DNode prev...
+          used to access previous element
+        Webpage url...
+          used to store url of site visited inside browser history
+        Webpage timel...
+          used to store time visited site in browser history
+    IN CLASS BROWSERHISTORY
+        int numVisited...
+          used to store number of sites visited in full browser history
+        DNode *head
+          pointer to the first element in the list
+        DNode *tail
+          pointer to the last element in the list
+        DNode *cursor
+          used with the forward and back functions within browser history to keep track of the site currently "on"
