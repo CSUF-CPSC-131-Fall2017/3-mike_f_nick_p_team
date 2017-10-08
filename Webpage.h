@@ -13,6 +13,13 @@ public:
 private:
 	// Add private member variables for your class along with any
 	// other variables required to implement the public member functions
+	// TO BE COMPLETED
 	time_t time;
 	string url;
+
+	// adds functionality of webpage as a node
+	Webpage* next;
+	Webpage* prev;
+	friend class BrowserHistory;
 };
+
