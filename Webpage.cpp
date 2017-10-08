@@ -6,7 +6,7 @@ Webpage::Webpage() {
 	time = 0;
 }
 
-//initialized constructor
+//initialize constructor
 Webpage::Webpage(const string& webpageURL, const time_t& timeVisited) {
 	// TO BE COMPLETED
 	url = webpageURL;
