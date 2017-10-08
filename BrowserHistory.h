@@ -27,7 +27,7 @@ public:
     void printFullHistory();
 
 private:
-    // Add private member variables for your class along with any
-    // other variables required to implement the public member functions
-    // TO BE COMPLETED
+    list<Webpage> navHistory;
+    list<Webpage> webHistory;
+    int numVisited;
 };
