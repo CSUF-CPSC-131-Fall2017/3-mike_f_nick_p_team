@@ -11,6 +11,6 @@ public:
     time_t getTime();
 
 private:
-   string webAddress;
-   time_t timeVisited;
+   string url;
+   time_t time;
 };
