@@ -25,3 +25,5 @@ IN BROWSERHISTORY.h
           pointer to the last element in the list
         DNode *cursor
           used with the forward and back functions within browser history to keep track of the site currently "on"
+        Webpage fullHistory
+          List of all sites visited based only on time, visisted that is not altered
