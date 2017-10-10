@@ -20,8 +20,8 @@ BrowserHistory::~BrowserHistory() {
 		q->next = p;
 		delete delCursor;
 	}
-	head = NULL;
-	tail = NULL;
+	head->next = tail;
+	tail->prev = head;
 }
 
 //THIS FUNCTION IS VERY MESSED UP
