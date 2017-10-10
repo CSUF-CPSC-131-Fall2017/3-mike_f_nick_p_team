@@ -6,12 +6,19 @@ BrowserHistory::BrowserHistory() {
 	head = NULL;
 	tail = NULL;
 	cursor = head;
+	// add full browser history stack 
+	// full history will not delete elements, only add
 }
 
 //destructor must delete every node in the browser history
 BrowserHistory::~BrowserHistory() {
 	for (Webpage *delCursor = head; delCursor->next == NULL; delCursor = delCursor->next) {
 		//remove the elements 
+		// also needs to change previous and next pointers
+		Webpage *p = delCursor -> next;
+		Webpage *q = delCursor -> prev;
+		p -> prev = q;
+		q -> next = p;
 		delete delCursor;
 	}
 }
@@ -24,7 +31,8 @@ BrowserHistory::~BrowserHistory() {
 void BrowserHistory::visitSite(Webpage newSite) {
 	// TO BE COMPLETED
 	// adds new node into the list at the end
-
+	// also needs to add the webpage to the stack of webpages that will remain imperfect
+	
 	//THIS ONLY WORKS IF THE CURSOR IS AT THE END
 
 	//create new node with pointer p
