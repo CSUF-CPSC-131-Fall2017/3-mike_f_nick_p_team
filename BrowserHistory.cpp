@@ -143,6 +143,11 @@ void BrowserHistory::readHistory(string fileName) {
 	// TO BE COMPLETED
 	//read in from a file
 	//MUST BE ABLE TO READ FORWARD AND BACK COMMANDS AS WELL AS NEW SITES VISITED
+	
+	while(!(fileName.eof()){
+	...	
+	}
+	
 }
 
 void BrowserHistory::printBackSites() {
