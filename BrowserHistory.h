@@ -36,6 +36,10 @@ private:
 	int numVisited;
 	Webpage *head;
 	Webpage *tail;
+	//this list stores the full UNALTERED browser history based solely on time accessed
+	list<Webpage> fullHistory;
+	// full history will not delete elements, only add and does not need a cursor to change
+	
 
 	//cursor will be used with the navigation functions of back and forward to keep track of the current location
 	//LOOK AT CURSOR WITH REGARDS TO NECESSARY FUNCTIONALITY NEEDED
