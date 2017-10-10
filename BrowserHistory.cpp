@@ -6,7 +6,8 @@ BrowserHistory::BrowserHistory() {
 	head = NULL;
 	tail = NULL;
 	cursor = head;
-	// add full browser history forward_list implemented history 
+	//this list stores the full UNALTERED browser history based solely on time accessed
+	list<Webpage> fullHistory;
 	// full history will not delete elements, only add and does not need a cursor to change
 }
 
@@ -31,6 +32,9 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	// TO BE COMPLETED
 	// adds new node into the list at the end
 	// also needs to add the webpage to the stack of webpages that will remain imperfect
+	
+	//adds new site visited to the list which stores full history
+	fullHistory.push_front(newSite);
 	
 	//THIS ONLY WORKS IF THE CURSOR IS AT THE END
 
@@ -134,7 +138,8 @@ void BrowserHistory::printFullHistory() {
 	
 	//head will point to first element in forward list
 	//rest is okay
-	for (Webpage *dispCursor = head; dispCursor->next = NULL; dispCursor = dispCursor->next) {
+	// need to test to see if iterators MUST BE USED for the list or if elements can be accessed as pointers
+	for (Webpage *dispCursor = fullHistory.front(); dispCursor->next = NULL; dispCursor = dispCursor->next) {
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
 	}
 }
