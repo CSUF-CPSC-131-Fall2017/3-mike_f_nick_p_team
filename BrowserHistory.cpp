@@ -6,14 +6,14 @@ BrowserHistory::BrowserHistory() {
 	head = NULL;
 	tail = NULL;
 	cursor = head;
-	// add full browser history stack 
-	// full history will not delete elements, only add
+	// add full browser history forward_list implemented history 
+	// full history will not delete elements, only add and does not need a cursor to change
 }
 
 //destructor must delete every node in the browser history
 BrowserHistory::~BrowserHistory() {
 	for (Webpage *delCursor = head; delCursor->next == NULL; delCursor = delCursor->next) {
-		//remove the elements 
+		//remove all the elements from visible browser history 
 		// also needs to change previous and next pointers
 		Webpage *p = delCursor -> next;
 		Webpage *q = delCursor -> prev;
@@ -25,7 +25,6 @@ BrowserHistory::~BrowserHistory() {
 
 //THIS FUNCTION IS VERY MESSED UP
 //WORK ON IT
-
 
 //add node to linked list
 void BrowserHistory::visitSite(Webpage newSite) {
@@ -129,8 +128,12 @@ void BrowserHistory::printForwardSites() {
 	}
 }
 
+//printFullHistory should be reading in from the stack method of browser history which stores all sites regardless of deletion
 void BrowserHistory::printFullHistory() {
 	// TO BE COMPLETED
+	
+	//head will point to first element in forward list
+	//rest is okay
 	for (Webpage *dispCursor = head; dispCursor->next = NULL; dispCursor = dispCursor->next) {
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
 	}
