@@ -44,7 +44,13 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	p->setInfo(newSite);
 	//find old final node with pointer q
 
-	//need case if this is first webpage and tail is a pointer to null
+	//4 Cases for adding sites
+		//first webpage visited
+		//cursor is at the end
+		//cursor at beginning (nonempty)
+		//cursor not at beginning (nonempty)
+	
+	//first webpage visited 
 	if ((head == NULL) && (tail == NULL)) {
 		head = p;
 		tail = p;
@@ -54,7 +60,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		cursor = p;
 	}
 
-	//if new site is not the first visited and cursor is at the end of the list
+	//cursor at the end (nonempty)
 	else if((tail -> next == NULL) && (head != NULL) && (cursor->next == NULL)){
 		Webpage *q;
 		q = tail;
@@ -69,7 +75,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		cursor = p;
 	}
 
-	//if new site is not the first visited and cursor is not at the end of the list
+	//cursor not at beginning (nonempty)
 	else if ((cursor->next != NULL) && (head != NULL) && (tail != NULL)) {
 		// q will be previous node
 		// r will be next node
@@ -84,6 +90,19 @@ void BrowserHistory::visitSite(Webpage newSite) {
 
 		cursor = p;
 	}
+	//cursor at beginning (nonempty)
+	else if ((cursor->next != NULL) && (cursor->prev == NULL){
+		//put code here
+		// CHECK THE ARGUMENTS AND SEE IF PREVIOUS NODE IS SET TO NULL BY DEFAULT
+		Webpage *q;
+		q = cursor -> next;
+		
+		
+		p->next = q;
+		//allows this statement to run 
+		p->prev = NULL;
+		}
+	
 }
 
 //get url from current cursor position
@@ -102,22 +121,31 @@ size_t BrowserHistory::getNavSize() {
 
 //move cursor back
 string BrowserHistory::back() {
-	cursor = cursor->prev;
-	return cursor->url;
+	if(cursor->prev != NULL){
+		cursor = cursor->prev;
+		return cursor->url;
+	}
+	//comes here if going back points to NULL
+		return "Cursor is at First element already!";
 }
 
 //move cursor forward
 string BrowserHistory::forward() {
-	cursor = cursor->next;
-	return cursor->url;
+	if(cursor->next != NULL){
+		cursor = cursor->next;
+		return cursor->url;}
+	//comes here if going forward points to NULL
+		return "Cursor as at Last element already!";
 }
+
 
 void BrowserHistory::readHistory(string fileName) {
 	// TO BE COMPLETED
+	//read in from a file
+	//MUST BE ABLE TO READ FORWARD AND BACK COMMANDS AS WELL AS NEW SITES VISITED
 }
 
 void BrowserHistory::printBackSites() {
-	// TO BE COMPLETED
 	// cannot be done recursively due to lack of parameters
 	for (Webpage *dispCursor = head; dispCursor->next = cursor; dispCursor = dispCursor->next) {
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
@@ -125,7 +153,6 @@ void BrowserHistory::printBackSites() {
 }
 
 void BrowserHistory::printForwardSites() {
-	// TO BE COMPLETED
 	//start at current site and end once reached end of browsing history
 	for (Webpage *dispCursor = cursor; dispCursor->next = NULL; dispCursor = dispCursor->next) {
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
