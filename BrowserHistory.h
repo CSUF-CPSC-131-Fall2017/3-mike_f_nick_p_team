@@ -27,7 +27,7 @@ public:
     void printFullHistory();
 
 private:
-    list<Webpage> navHistory;
-    list<Webpage> webHistory;
+    list<Webpage> browHistory;
+    list<Webpage> fullHistory;
     int numVisited;
 };
