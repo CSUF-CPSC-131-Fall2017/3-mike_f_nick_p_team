@@ -5,11 +5,13 @@ BrowserHistory::BrowserHistory() {
 }
 
 BrowserHistory::~BrowserHistory() {
-    // TO BE COMPLETED
+    //delete each list
 }
 
 void BrowserHistory::visitSite(Webpage newSite) {
-    // TO BE COMPLETED
+    //if browHistory is empty
+    //if cursor is at end
+    //if cursor is in middle, delete everything after using tail and going backwards, then cursor next
 }
 
 string BrowserHistory::getURL() {
