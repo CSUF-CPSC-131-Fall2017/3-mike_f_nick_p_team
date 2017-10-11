@@ -3,10 +3,9 @@
 //default constructor
 BrowserHistory::BrowserHistory() {
 	numVisited = 0;
-	head = NULL;
-	tail = NULL;
+	head->next = tail;
+	tail->prev = head;
 	cursor = head;
-	
 }
 
 //destructor must delete every node in the browser history
