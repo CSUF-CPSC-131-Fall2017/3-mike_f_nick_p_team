@@ -9,6 +9,9 @@ BrowserHistory::~BrowserHistory() {
 }
 
 void BrowserHistory::visitSite(Webpage newSite) {
+    if (browHistory.empty)
+        browHistory.push_back(newSite);
+    
     //if browHistory is empty
     //if cursor is at end
     //if cursor is in middle, delete everything after using tail and going backwards, then cursor next
