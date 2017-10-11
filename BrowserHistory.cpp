@@ -58,7 +58,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	}
 
 	//cursor at the end (nonempty)
-	else if ((cursor->next == NULL) && (head != NULL)) {
+	else if ((cursor == tail) && (head != NULL)) {
 		Webpage *q;
 		//q is a pointer to the last node in the list
 		q = tail;
@@ -225,15 +225,31 @@ void BrowserHistory::readHistory(string fileName) {
 //does not need to access full history
 void BrowserHistory::printBackSites() {
 	// cannot be done recursively due to lack of parameters
-	for (Webpage *dispCursor = head; dispCursor->next = cursor; dispCursor = dispCursor->next) {
+	/*for (Webpage *dispCursor = head; dispCursor->next = cursor; dispCursor = dispCursor->next) {
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+	}*/
+
+	Webpage *dispCursor = head;
+	while (dispCursor != cursor) {
+
+		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+		dispCursor = dispCursor->next;
 	}
 }
+
 //does not need to access full history
 void BrowserHistory::printForwardSites() {
 	//start at current site and end once reached end of browsing history
-	for (Webpage *dispCursor = cursor; dispCursor->next = NULL; dispCursor = dispCursor->next) {
+	/*for (Webpage *dispCursor = cursor; dispCursor->next = NULL; dispCursor = dispCursor->next) {
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+	}*/
+
+
+	Webpage *dispCursor = tail;
+	while (dispCursor != cursor->prev) {
+
+		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+		dispCursor = dispCursor->prev;
 	}
 }
 
