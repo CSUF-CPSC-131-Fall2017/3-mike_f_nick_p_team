@@ -2,7 +2,7 @@
 
 //default constructor
 BrowserHistory::BrowserHistory() {
-	// TO BE COMPLETED
+	numVisited = 0;
 	head = NULL;
 	tail = NULL;
 	cursor = head;
