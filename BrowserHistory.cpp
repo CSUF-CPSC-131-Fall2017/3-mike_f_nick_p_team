@@ -229,6 +229,8 @@ void BrowserHistory::printBackSites() {
 	}*/
 
 	Webpage *dispCursor = head;
+	//need to add case if dispCursor starts as equal to the cursor so the single node data is printed
+		//only changing it to a do-while won't work, because dispCursor might try to access NULL->next
 	while (dispCursor != cursor) {
 
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
