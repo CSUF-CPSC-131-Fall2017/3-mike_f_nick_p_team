@@ -186,7 +186,8 @@ void BrowserHistory::readHistory(string fileName) {
 	//ensure it can read forward and back commands
 
 	//FILE IS NOT OPENING
-
+		
+	cout << "Hello World!\n\n\n\n";
 
 	//open the file
 	ifstream myFile;
