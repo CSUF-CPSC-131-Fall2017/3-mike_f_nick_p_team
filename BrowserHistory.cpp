@@ -1,12 +1,12 @@
+
 #include "BrowserHistory.h"
 
 //default constructor
 BrowserHistory::BrowserHistory() {
-	// TO BE COMPLETED
-	head = NULL;
-	tail = NULL;
+	numVisited = 0;
+	head= tail;
+	tail= head;
 	cursor = head;
-	
 }
 
 //destructor must delete every node in the browser history
@@ -20,8 +20,8 @@ BrowserHistory::~BrowserHistory() {
 		q->next = p;
 		delete delCursor;
 	}
-	head = NULL;
-	tail = NULL;
+	head->next = tail;
+	tail->prev = head;
 }
 
 //THIS FUNCTION IS VERY MESSED UP
@@ -53,10 +53,12 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		p->next = NULL;
 		p->prev = NULL;
 		cursor = p;
+		numVisited++;
+		return;
 	}
 
 	//cursor at the end (nonempty)
-	else if ((cursor->next == NULL) && (head != NULL)) {
+	else if ((cursor == tail) && (head != NULL)) {
 		Webpage *q;
 		//q is a pointer to the last node in the list
 		q = tail;
@@ -69,35 +71,64 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		p->prev = q;
 		//set cursor to be on current new site
 		cursor = p;
+		numVisited++;
+		return;
 	}
 
-	//cursor not at beginning (nonempty)
-	else if ((cursor->next != NULL) && (head != NULL)) {
-		// q will be previous node
-		// r will be next node
-		Webpage *q;
-		Webpage *r;
-
-		q = cursor->prev;
-		r = cursor->next;
-
-		p->next = r;
-		p->prev = q;
-
-		cursor = p;
+	//somewhere else
+	else
+	{
+		//delete all next elements
+		Webpage *r = cursor;
+		Webpage *delCursor = tail;
+		while (delCursor != cursor) {
+			Webpage *temp = delCursor;
+			delCursor = delCursor->prev;
+			delete temp;
+			numVisited--;
+		}
+		r->next = new Webpage;
+		cursor = r->next;
+		cursor->next = NULL;
+		numVisited++;
 	}
-	//cursor at beginning (nonempty)
-	else if ((cursor->next != NULL) && (cursor->prev == NULL)) {
-		//put code here
-		// CHECK THE ARGUMENTS AND SEE IF PREVIOUS NODE IS SET TO NULL BY DEFAULT
-		Webpage *q;
-		q = cursor->next;
 
 
-		p->next = q;
-		//allows this statement to run 
-		p->prev = NULL;
-	}
+
+
+
+
+	////cursor not at beginning (nonempty)
+	//else if ((cursor->next != NULL) && (head != NULL)) {
+	//	// q will be previous node
+	//	// r will be next node
+	//	Webpage *q;
+	//	Webpage *r;
+
+	//	q = cursor->prev;
+	//	r = cursor->next;
+
+	//	p->next = r;
+	//	p->prev = q;
+
+	//	cursor = p;
+	//	numVisited++;
+	//	return;
+	//}
+	////cursor at beginning (nonempty)
+	//else if ((cursor->next != NULL) && (cursor->prev == NULL)) {
+	//	//put code here
+	//	// CHECK THE ARGUMENTS AND SEE IF PREVIOUS NODE IS SET TO NULL BY DEFAULT
+	//	Webpage *q;
+	//	q = cursor->next;
+
+
+	//	p->next = q;
+	//	//allows this statement to run 
+	//	p->prev = NULL;
+	//	numVisited++;
+	//	return;
+	//}
 
 }
 
@@ -117,17 +148,20 @@ size_t BrowserHistory::getNavSize() {
 
 //move cursor back
 string BrowserHistory::back() {
-	if (cursor->prev != NULL) {
+	//giving error when cursor is a null pointer
+	if (cursor != head) {
 		cursor = cursor->prev;
 		return cursor->url;
 	}
-	//comes here if going back points to NULL
-	return "Cursor is at First element already!";
+	//comes here if going back points to NULL or if cursor is null
+	else {
+		return "Cursor is at First element already!";
+	}
 }
 
 //move cursor forward
 string BrowserHistory::forward() {
-	if (cursor->next != NULL) {
+	if (cursor != tail) {
 		cursor = cursor->next;
 		return cursor->url;
 	}
@@ -154,8 +188,8 @@ void BrowserHistory::readHistory(string fileName) {
 		//input variables to read into here
 		//for the mobileinput.txt, order goes
 		//we know commands, so we can read as string
-			//string is array of characters and each command has different first character
-			//use first character in the string to determine command
+		//string is array of characters and each command has different first character
+		//use first character in the string to determine command
 		string command;
 		string url;
 		time_t timeVisited;
@@ -164,10 +198,10 @@ void BrowserHistory::readHistory(string fileName) {
 		while (myFile >> command) {
 			//code goes here
 			//need way to find command from text file
-				//3 commands
-					//new
-					//back
-					//forward
+			//3 commands
+			//new
+			//back
+			//forward
 			if (command[0] == 'f' || command[0] == 'F') {
 				//forward command
 				forward();
@@ -176,7 +210,7 @@ void BrowserHistory::readHistory(string fileName) {
 				//back command
 				back();
 			}
-			else if (command[0] == 'n' || command [0] == 'N') {
+			else if (command[0] == 'n' || command[0] == 'N') {
 				//new site is visited if first character of string in n as in New
 				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url >> timeVisited;
@@ -191,15 +225,33 @@ void BrowserHistory::readHistory(string fileName) {
 //does not need to access full history
 void BrowserHistory::printBackSites() {
 	// cannot be done recursively due to lack of parameters
-	for (Webpage *dispCursor = head; dispCursor->next = cursor; dispCursor = dispCursor->next) {
+	/*for (Webpage *dispCursor = head; dispCursor->next = cursor; dispCursor = dispCursor->next) {
+	cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+	}*/
+
+	Webpage *dispCursor = head;
+	//need to add case if dispCursor starts as equal to the cursor so the single node data is printed
+	//only changing it to a do-while won't work, because dispCursor might try to access NULL->next
+	while (dispCursor != cursor) {
+
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+		dispCursor = dispCursor->next;
 	}
 }
+
 //does not need to access full history
 void BrowserHistory::printForwardSites() {
 	//start at current site and end once reached end of browsing history
-	for (Webpage *dispCursor = cursor; dispCursor->next = NULL; dispCursor = dispCursor->next) {
+	/*for (Webpage *dispCursor = cursor; dispCursor->next = NULL; dispCursor = dispCursor->next) {
+	cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+	}*/
+
+
+	Webpage *dispCursor = tail;
+	while (dispCursor != cursor->prev) {
+
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+		dispCursor = dispCursor->prev;
 	}
 }
 
