@@ -98,43 +98,6 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		r->setInfo(newSite);
 	}
 
-
-
-
-
-
-	////cursor not at beginning (nonempty)
-	//else if ((cursor->next != NULL) && (head != NULL)) {
-	//	// q will be previous node
-	//	// r will be next node
-	//	Webpage *q;
-	//	Webpage *r;
-
-	//	q = cursor->prev;
-	//	r = cursor->next;
-
-	//	p->next = r;
-	//	p->prev = q;
-
-	//	cursor = p;
-	//	numVisited++;
-	//	return;
-	//}
-	////cursor at beginning (nonempty)
-	//else if ((cursor->next != NULL) && (cursor->prev == NULL)) {
-	//	//put code here
-	//	// CHECK THE ARGUMENTS AND SEE IF PREVIOUS NODE IS SET TO NULL BY DEFAULT
-	//	Webpage *q;
-	//	q = cursor->next;
-
-
-	//	p->next = q;
-	//	//allows this statement to run 
-	//	p->prev = NULL;
-	//	numVisited++;
-	//	return;
-	//}
-
 }
 
 //get url from current cursor position
