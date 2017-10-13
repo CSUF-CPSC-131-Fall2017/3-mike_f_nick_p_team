@@ -191,10 +191,6 @@ void BrowserHistory::readHistory(string fileName) {
 
 	//for some reason, not going into while loop to read the file data
 
-	if (myFile.is_open()) {
-		cout << "what is happeinging then?????!?!?!" << endl;
-	}
-
 
 	if (myFile.is_open()) {
 		cout << "Successfully opened file: " << fileName << endl << endl;
@@ -207,7 +203,7 @@ void BrowserHistory::readHistory(string fileName) {
 		string url;
 		time_t timeVisited;
 			
-		cout << "it got here\n"'
+		cout << "it got here\n";
 		//while loop won't work as some statements contain only commands
 		while (myFile >> command) {
 			//code goes here
@@ -220,7 +216,7 @@ void BrowserHistory::readHistory(string fileName) {
 			cout <<"then here\n";
 			if (command[0] == 'f' || command[0] == 'F') {
 				//forward command
-				cout<<"next here\n";
+				
 				forward();
 			}
 			else if (command[0] == 'b' || command[0] == 'B') {
@@ -228,6 +224,7 @@ void BrowserHistory::readHistory(string fileName) {
 				back();
 			}
 			else if (command[0] == 'n' || command[0] == 'N') {
+				cout<<"next here\n";
 				//new site is visited if first character of string in n as in New
 				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url >> timeVisited;
