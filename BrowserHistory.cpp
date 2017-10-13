@@ -91,6 +91,11 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		cursor = r->next;
 		cursor->next = NULL;
 		numVisited++;
+		
+		//sets information for next site
+		//need to check to make easier to understand
+		r = r->next;
+		r->setInfo(newSite);
 	}
 
 
