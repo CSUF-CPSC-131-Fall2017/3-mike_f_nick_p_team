@@ -185,15 +185,19 @@ void BrowserHistory::readHistory(string fileName) {
 			}
 			else if (command[0] == 'n' || command[0] == 'N') {
 				string url;
-				long int timeVisited;
+				
+				//time visited is not being stored, but it is being read
+				time_t timeVisited;
+				
+				
 				//new site is visited if first character of string in n as in New
 				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url >> timeVisited;
 				Webpage newVisit(url, timeVisited);
 				
-				
 				cout << newVisit.getURL();
 				cout << "\n" << newVisit.getTime();
+				
 				
 				
 				visitSite(newVisit);
