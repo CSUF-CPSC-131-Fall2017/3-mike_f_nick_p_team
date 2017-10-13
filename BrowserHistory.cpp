@@ -197,9 +197,9 @@ void BrowserHistory::readHistory(string fileName) {
 				time_t time = static_cast<time_t>(timeVisited);
 				Webpage newVisit(url, timeVisited);
 
+				//WHY DO YOU NOT WORK!!!!!!!!!!!!!!!
 				cout << newVisit.getURL();
-				cout << "\n" << newVisit.getTime();
-
+				cout << newVisit.getTime();
 
 
 				visitSite(newVisit);
