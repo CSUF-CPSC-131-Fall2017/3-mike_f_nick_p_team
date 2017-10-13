@@ -184,23 +184,21 @@ void BrowserHistory::readHistory(string fileName) {
 				back();
 			}
 			else if (command[0] == 'n' || command[0] == 'N') {
-				string url;
-
-				//time visited is not being stored, but it is being read
-				long timeVisited;
-
-
+				
 				//new site is visited if first character of string in n as in New
 				//only then will url and time show up on the txt file, else they won't exist on the line
-				myFile >> url >> timeVisited;
+				
+				string url;
+				time_t timeVisited;
 
-				time_t time = static_cast<time_t>(timeVisited);
+				myFile >> url;
+				myFile >> timeVisited;
+
 				Webpage newVisit(url, timeVisited);
 
 				//WHY DO YOU NOT WORK!!!!!!!!!!!!!!!
 				cout << newVisit.getURL();
 				cout << newVisit.getTime();
-
 
 				visitSite(newVisit);
 				cout << "Then why does it break?" << endl;
