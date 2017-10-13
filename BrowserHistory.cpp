@@ -180,8 +180,19 @@ void BrowserHistory::readHistory(string fileName) {
 	//read url & time
 	//ensure it can read forward and back commands
 
+	//FILE IS NOT OPENING
 
-	ifstream myFile(fileName);
+
+	//open the file
+	ifstream myFile;
+	myFile.open(fileName);
+
+	//for some reason, not going into while loop to read the file data
+
+	if (myFile.is_open()) {
+		cout << "what is happeinging then?????!?!?!" << endl;
+	}
+
 
 	if (myFile.is_open()) {
 		cout << "Successfully opened file: " << fileName << endl << endl;
@@ -218,6 +229,7 @@ void BrowserHistory::readHistory(string fileName) {
 			}
 		}
 	}
+	myFile.close();
 }
 
 
