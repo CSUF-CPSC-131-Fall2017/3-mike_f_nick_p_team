@@ -185,10 +185,6 @@ void BrowserHistory::readHistory(string fileName) {
 	//read url & time
 	//ensure it can read forward and back commands
 
-	//FILE IS NOT OPENING
-		
-	cout << "Hello World!\n\n\n\n";
-
 	//open the file
 	ifstream myFile;
 	myFile.open(fileName);
@@ -210,7 +206,8 @@ void BrowserHistory::readHistory(string fileName) {
 		string command;
 		string url;
 		time_t timeVisited;
-
+			
+		cout << "it got here\n"'
 		//while loop won't work as some statements contain only commands
 		while (myFile >> command) {
 			//code goes here
@@ -219,8 +216,11 @@ void BrowserHistory::readHistory(string fileName) {
 			//new
 			//back
 			//forward
+			
+			cout <<"then here\n";
 			if (command[0] == 'f' || command[0] == 'F') {
 				//forward command
+				cout<<"next here\n";
 				forward();
 			}
 			else if (command[0] == 'b' || command[0] == 'B') {
