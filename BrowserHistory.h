@@ -8,26 +8,25 @@
 #include "Webpage.h"
 using namespace std;
 
-class BrowserHistory {
+//BrowserHistory acts as a doubly linked list class.
+class BrowserHistory { 
 public:
-    BrowserHistory();
-    ~BrowserHistory();
-
-    void visitSite(Webpage newSite);
-    string back();
-    string forward();
-
-    void readHistory(string fileName);
-
-    string getURL();
-    size_t getNavSize();
-
-    void printBackSites();
-    void printForwardSites();
-    void printFullHistory();
+	BrowserHistory();
+	~BrowserHistory();
+	void visitSite(Webpage newSite);
+	string back();
+	string forward();
+	void readHistory(string filename);
+	string getURL();
+	size_t getNavSize();
+	void printBackSites();
+	void printForwardSites();
+	void printFullHistory();
 
 private:
-    list<Webpage> browHistory;
-    list<Webpage> fullHistory;
-    int numVisited;
+	int numVisited;
+	Webpage *head;
+	Webpage *tail;
+	list<Webpage> fullHistory; //Will hold every website visited ordered by time visited. Will never need to remove elements.
+	Webpage *cursor; //Used to keep track of location within the browsing history list.
 };
