@@ -26,3 +26,11 @@ void Webpage::setInfo(const Webpage &newSite) {
 	url = newSite.url;
 	time = newSite.time;
 }
+
+void Webpage::setURL(string newURL) {
+	url = newURL;
+}
+
+void Webpage::setTime(time_t newTime) {
+	time = newTime;
+}
