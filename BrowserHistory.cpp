@@ -200,10 +200,8 @@ void BrowserHistory::readHistory(string fileName) {
 		//string is array of characters and each command has different first character
 		//use first character in the string to determine command
 		string command;
-		string url;
-		time_t timeVisited;
+		
 			
-		cout << "it got here\n";
 		//while loop won't work as some statements contain only commands
 		while (myFile >> command) {
 			//code goes here
@@ -213,7 +211,6 @@ void BrowserHistory::readHistory(string fileName) {
 			//back
 			//forward
 			
-			cout <<"then here\n";
 			if (command[0] == 'f' || command[0] == 'F') {
 				//forward command
 				
@@ -224,11 +221,13 @@ void BrowserHistory::readHistory(string fileName) {
 				back();
 			}
 			else if (command[0] == 'n' || command[0] == 'N') {
-				cout<<"next here\n";
+				string url;
+				time_t timeVisited;
 				//new site is visited if first character of string in n as in New
 				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url >> timeVisited;
-				visitSite(Webpage(url, timeVisited));
+				Webpage newVisit(url, timeVisited);
+				visitSite(newVisit);
 			}
 		}
 	}
