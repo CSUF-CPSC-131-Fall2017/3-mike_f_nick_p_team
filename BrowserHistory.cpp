@@ -192,8 +192,8 @@ void BrowserHistory::readHistory(string fileName) {
 				Webpage newVisit(url, timeVisited);
 				
 				
-				cout << newVisit->getURL();
-				cout << "\n" << newVisit->getTime();
+				cout << newVisit.getURL();
+				cout << "\n" << newVisit.getTime();
 				
 				
 				visitSite(newVisit);
