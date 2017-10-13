@@ -4,8 +4,8 @@
 //default constructor
 BrowserHistory::BrowserHistory() {
 	numVisited = 0;
-	head= tail;
-	tail= head;
+	head = tail;
+	tail = head;
 	cursor = head;
 }
 
@@ -91,7 +91,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		cursor = r->next;
 		cursor->next = NULL;
 		numVisited++;
-		
+
 		//sets information for next site
 		//need to check to make easier to understand
 		r = r->next;
@@ -163,8 +163,8 @@ void BrowserHistory::readHistory(string fileName) {
 		//string is array of characters and each command has different first character
 		//use first character in the string to determine command
 		string command;
-		
-			
+
+
 		//while loop won't work as some statements contain only commands
 		while (myFile >> command) {
 			//code goes here
@@ -173,10 +173,10 @@ void BrowserHistory::readHistory(string fileName) {
 			//new
 			//back
 			//forward
-			
+
 			if (command[0] == 'f' || command[0] == 'F') {
 				//forward command
-				
+
 				forward();
 			}
 			else if (command[0] == 'b' || command[0] == 'B') {
@@ -184,19 +184,19 @@ void BrowserHistory::readHistory(string fileName) {
 				back();
 			}
 			else if (command[0] == 'n' || command[0] == 'N') {
-				
-				//new site is visited if first character of string in n as in New
-				//only then will url and time show up on the txt file, else they won't exist on the line
-				
+								
 				string url;
 				time_t timeVisited;
 
+				//new site is visited if first character of string in n as in New
+				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url;
 				myFile >> timeVisited;
 
-				Webpage newVisit(url, timeVisited);
+				Webpage newVisit;
+				newVisit.setTime(timeVisited);
+				newVisit.setURL(url);
 
-				//WHY DO YOU NOT WORK!!!!!!!!!!!!!!!
 				cout << newVisit.getURL();
 				cout << newVisit.getTime();
 
@@ -220,6 +220,11 @@ void BrowserHistory::printBackSites() {
 	Webpage *dispCursor = head;
 	//need to add case if dispCursor starts as equal to the cursor so the single node data is printed
 	//only changing it to a do-while won't work, because dispCursor might try to access NULL->next
+	if (numVisited == 0) {
+		cout << "List is empty, no sites to display" << endl;
+	}
+	
+	
 	while (dispCursor != cursor) {
 
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
@@ -236,6 +241,12 @@ void BrowserHistory::printForwardSites() {
 
 
 	Webpage *dispCursor = tail;
+
+	if (numVisited == 0) {
+		cout << "List is empty, no sites to display" << endl;
+	}
+
+
 	while (dispCursor != cursor->prev) {
 
 		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
@@ -246,6 +257,9 @@ void BrowserHistory::printForwardSites() {
 //printFullHistory should be reading in from the stack method of browser history which stores all sites regardless of deletion
 void BrowserHistory::printFullHistory() {
 	// TO BE COMPLETED
+	if (fullHistory.size() == 0) {
+		cout << "List is empty, no sites to display" << endl;
+	}
 
 	//head will point to first element in forward list
 	//rest is okay
