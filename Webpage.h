@@ -6,7 +6,8 @@ using namespace std;
 class Webpage {
 public:
 	Webpage();
-	Webpage(const string& webpageURL, const time_t& timeVisited);
+	//took out all reference operators to try fix... PUT THEM BACK IF IT BREAKS
+	Webpage(const string webpageURL, const time_t timeVisited);
 	string getURL();
 	time_t getTime();
 	void setInfo(const Webpage&);
