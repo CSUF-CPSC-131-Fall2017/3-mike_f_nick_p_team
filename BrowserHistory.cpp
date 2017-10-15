@@ -173,6 +173,9 @@ void BrowserHistory::readHistory(string fileName) {
 			//new
 			//back
 			//forward
+			
+		cout << command << endl;
+		cout << command[0] << endl;
 
 			if (command[0] == 'f' || command[0] == 'F') {
 				//forward command
