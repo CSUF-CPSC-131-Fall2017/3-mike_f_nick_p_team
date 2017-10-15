@@ -3,6 +3,8 @@
 //Default constructor.
 BrowserHistory::BrowserHistory() {
 	numVisited = 0;
+	head = new Webpage;
+	tail = new Webpage;
 	head->next = tail;
 	head->prev = nullptr;
 	tail->prev = head;
@@ -12,17 +14,15 @@ BrowserHistory::BrowserHistory() {
 
 //Destructor deletes list by deallocating memory.
 BrowserHistory::~BrowserHistory() {
-	//We must deallocate memory from browHistory doubly linked list
-	Webpage *delCursor = tail;
-	while (delCursor->prev != head) {
+	//We must deallocate memory from browser history doubly linked list
+	Webpage *delCursor = tail->prev;
+	while (delCursor != head) {
 		Webpage *p = delCursor->prev;
 		delete delCursor;
 		delCursor = p;
 	}
-	head->next = tail;
-	head->prev = nullptr;
-	tail->prev = head;
-	tail->next = nullptr;
+	delete head;
+	delete tail;
 
 	//The full history linked list implements its own destructor that will deallocate its memory.
 }
@@ -34,26 +34,26 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	fullHistory.push_front(newSite);
 
 	//First webpage visited.
-	if (head->next == tail->prev) {
+	if (head->next == tail) {
 		Webpage *p = new Webpage;	 //Create new node with pointer p
 		p->setInfo(newSite);
-		head = p;					 //Insert new node into list between head and tail.
 		cursor = p;					 //Update cursor.
-		cursor->next = nullptr;
-		cursor->prev = nullptr;
-		tail = cursor;				 //Set link between new node and tail.
+		head->next = cursor;		 //Insert new node into list between head and tail.		 
+		cursor->next = tail;
+		cursor->prev = head;		 //Set link between new node and sentinels.
+		tail->prev = cursor;		
 		numVisited++;
 		return;
 	}
 
 	//Cursor at the end of list.
-	else if (cursor->next == nullptr) {
+	else if (cursor->next == tail) {
 		Webpage *p = new Webpage;	//Create new node with pointer p.
 		p->setInfo(newSite);
 		cursor->next = p;			//Insert new node after cursor.
 		cursor = p;					//Update cursor.
-		cursor->next = nullptr;
-		tail = cursor;				//Set link between new node and tail.
+		cursor->next = tail;
+		tail->prev = cursor;		//Set link between new node and tail sentinel.
 		numVisited++;
 		return;
 	}
@@ -62,7 +62,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	else
 	{
 		//Delete all of the previous forward history.
-		Webpage *delCursor = tail;			//Start from tail and remove in reverse.
+		Webpage *delCursor = tail->prev;			//Start from tail and remove in reverse.
 		while (delCursor != cursor) {		//Until the cursor is reached.
 			Webpage *temp = delCursor;		//Store link to be deleted.
 			delCursor = delCursor->prev;	//Move deleting cursor back one link.
@@ -73,9 +73,10 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		Webpage *p = new Webpage;		//Create new node with pointer p.
 		p->setInfo(newSite);				
 		cursor->next = p;				//Insert new node after cursor.
+		p->prev = cursor;
 		cursor = p;						//Update cursor.
-		cursor->next = nullptr;			
-		tail = cursor;					//Set link between new node and tail.
+		cursor->next = tail;			
+		tail->prev = cursor;			//Set link between new node and tail.
 		numVisited++;
 	}
 }
@@ -96,16 +97,16 @@ size_t BrowserHistory::getNavSize() {
 
 //Move cursor back one link.
 string BrowserHistory::back() {
-	if (cursor->prev == nullptr) //If the cursor is at the beggining link.
+	if (cursor->prev == head) //If the cursor is at the beggining link.
 		throw invalid_argument("Cursor already at the beggining of the list.\n");
-	cursor = cursor->prev;		 //Move the cursor back one link (head and tail unchanged).
+	cursor = cursor->prev;	  //Move the cursor back one link (head and tail unchanged).
 	return cursor->url;
 }
 
 
 //Move cursor forward one link.
 string BrowserHistory::forward() {
-	if (cursor->next == nullptr) //If the cursor is at the final link.
+	if (cursor->next == tail) //If the cursor is at the final link.
 		throw invalid_argument("Cursor already at the end of the list.\n");
 	cursor = cursor->next;		 //Move the cursor forward one link (head and tail unchanged).
 	return cursor->url;
@@ -138,7 +139,7 @@ void BrowserHistory::readHistory(string fileName) {
 
 //Prints sites from beggining of browser up to (but not including) the current page.
 void BrowserHistory::printBackSites() {
-	if (head->next == tail->prev)
+	if (head->next == tail)
 		throw invalid_argument("There are no items in the browser history.\n");
 	Webpage *dispCursor = head;
 	while (dispCursor->next != cursor) {
@@ -150,14 +151,16 @@ void BrowserHistory::printBackSites() {
 
 //Does not need to access full history
 void BrowserHistory::printForwardSites() {
-	if (head->next == tail->prev)
+	if (head->next == tail)
 		throw invalid_argument("There are no items in the browser history.\n");
 	Webpage* dispCursor = cursor;
 	while (dispCursor->next != nullptr) {
 		cout << "Site URL: " << dispCursor->url << endl;
 		cout << "Time Visited: " << dispCursor->time << endl << endl;
-		dispCursor = dispCursor->prev;		//Move cursor forward one link.
+		dispCursor = dispCursor->next;		//Move cursor forward one link.
 	}
+	cout << "Site URL: " << dispCursor->url << endl;
+	cout << "Time Visited: " << dispCursor->time << endl << endl;
 }
 
 
