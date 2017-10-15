@@ -7,7 +7,7 @@ class Webpage {
 public:
 	Webpage();
 	//took out all reference operators to try fix... PUT THEM BACK IF IT BREAKS
-	Webpage(const string webpageURL, const time_t timeVisited);
+	Webpage(const string& webpageURL, const time_t& timeVisited);
 	string getURL();
 	time_t getTime();
 	void setInfo(const Webpage&);
