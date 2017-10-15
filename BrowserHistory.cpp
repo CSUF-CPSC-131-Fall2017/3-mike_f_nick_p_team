@@ -1,8 +1,3 @@
-//INCLUDING FOR TESTS DELETE
-#include <typeinfo>
-
-
-//INCLUDING FOR TESTS DELETE
 
 #include "BrowserHistory.h"
 
@@ -196,8 +191,8 @@ void BrowserHistory::readHistory(string fileName) {
 				myFile >> url;
 				myFile >> timeVisited;
 				
-				cout << typeid(url).name() << endl;
-				cout << typeid(timeVisited).name() << endl;
+				cout << url;
+				cout << timeVisited;
 				
 				//this is causing it to break
 				Webpage newVisit(url, timeVisited);
