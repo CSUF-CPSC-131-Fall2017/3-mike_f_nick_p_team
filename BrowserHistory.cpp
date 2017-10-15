@@ -1,3 +1,8 @@
+//INCLUDING FOR TESTS DELETE
+#include <typeinfo>
+
+
+//INCLUDING FOR TESTS DELETE
 
 #include "BrowserHistory.h"
 
@@ -190,7 +195,11 @@ void BrowserHistory::readHistory(string fileName) {
 				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url;
 				myFile >> timeVisited;
-
+				
+				cout << typeid(url).name() << endl;
+				cout << typeid(timeVisited).name() << endl;
+				
+				//this is causing it to break
 				Webpage newVisit(url, timeVisited);
 
 				cout << newVisit.getURL();
