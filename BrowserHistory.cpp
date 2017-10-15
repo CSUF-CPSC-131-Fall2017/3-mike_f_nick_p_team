@@ -164,18 +164,13 @@ void BrowserHistory::readHistory(string fileName) {
 		//use first character in the string to determine command
 		string command;
 
-
-		//while loop won't work as some statements contain only commands
 		while (myFile >> command) {
-			//code goes here
-			//need way to find command from text file
+
 			//3 commands
 			//new
 			//back
 			//forward
 			
-		cout << command << endl;
-		cout << command[0] << endl;
 
 			if (command[0] == 'f' || command[0] == 'F') {
 				//forward command
@@ -195,6 +190,9 @@ void BrowserHistory::readHistory(string fileName) {
 				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url;
 				myFile >> timeVisited;
+				
+				cout << url << endl;
+				cout << timeVisited << endl;
 
 				Webpage newVisit;
 				newVisit.setTime(timeVisited);
