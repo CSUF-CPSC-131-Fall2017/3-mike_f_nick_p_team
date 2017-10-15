@@ -190,13 +190,8 @@ void BrowserHistory::readHistory(string fileName) {
 				//only then will url and time show up on the txt file, else they won't exist on the line
 				myFile >> url;
 				myFile >> timeVisited;
-				
-				cout << url << endl;
-				cout << timeVisited << endl;
 
-				Webpage newVisit;
-				newVisit.setTime(timeVisited);
-				newVisit.setURL(url);
+				Webpage newVisit(url, timeVisited);
 
 				cout << newVisit.getURL();
 				cout << newVisit.getTime();
