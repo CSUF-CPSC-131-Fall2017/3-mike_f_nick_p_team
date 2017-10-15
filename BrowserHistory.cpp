@@ -188,8 +188,9 @@ void BrowserHistory::readHistory(string fileName) {
 
 				//new site is visited if first character of string in n as in New
 				//only then will url and time show up on the txt file, else they won't exist on the line
-				myFile >> url;
-				myFile >> timeVisited;
+				
+				//is this breaking it?
+				myFile >> url >> timeVisited;
 				
 				cout << url;
 				cout << timeVisited;
