@@ -117,7 +117,7 @@ size_t BrowserHistory::getNavSize() {
 //move cursor back
 string BrowserHistory::back() {
 	//giving error when cursor is a null pointer
-	if (cursor != head) {
+	if (cursor != head || numVisited == 0) {
 		cursor = cursor->prev;
 		return cursor->url;
 	}
@@ -129,7 +129,7 @@ string BrowserHistory::back() {
 
 //move cursor forward
 string BrowserHistory::forward() {
-	if (cursor != tail) {
+	if (cursor != tail || numVisited == 0) {
 		cursor = cursor->next;
 		return cursor->url;
 	}
