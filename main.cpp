@@ -62,13 +62,13 @@ int main() {
     testAnswer("BrowserHistory.getURL()", testHistory.getURL(), string("http://twitter.com"));
 
     // Test BrowserHistory navigation
-   // testAnswer("BrowserHistory.back()", testHistory.back(), string("http://www.google.com"));
-   // testAnswer("BrowserHistory.getURL()", testHistory.getURL(), string("http://www.google.com"));
-   // testAnswer("BrowserHistory.forward()", testHistory.forward(), string("http://twitter.com"));
-    //testHistory.back();
-    //testHistory.visitSite(testPage03);
-   // testAnswer("BrowserHistory.getNavSize()", testHistory.getNavSize(), size_t(2));
-    //testAnswer("BrowserHistory.getURL()", testHistory.getURL(), string("http://stackoverflow.com"));
+    testAnswer("BrowserHistory.back()", testHistory.back(), string("http://www.google.com"));
+    testAnswer("BrowserHistory.getURL()", testHistory.getURL(), string("http://www.google.com"));
+    testAnswer("BrowserHistory.forward()", testHistory.forward(), string("http://twitter.com"));
+    testHistory.back();
+    testHistory.visitSite(testPage03);
+    testAnswer("BrowserHistory.getNavSize()", testHistory.getNavSize(), size_t(2));
+    testAnswer("BrowserHistory.getURL()", testHistory.getURL(), string("http://stackoverflow.com"));
 
 
     // Test BrowserHistory reading from a file
