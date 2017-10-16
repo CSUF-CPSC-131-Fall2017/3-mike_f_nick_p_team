@@ -16,7 +16,7 @@ class Node{
 		Node* next;
 		Node* prev;
 		friend class BrowserHistory;
-	}
+	};
 
 
 //In this case, BrowserHistory is the DLinkedList class
