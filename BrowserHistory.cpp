@@ -4,6 +4,7 @@
 //default constructor
 BrowserHistory::BrowserHistory() {
 	numVisited = 0;
+	//use michael's constructor and destructor
 	head = tail;
 	tail = head;
 	cursor = head;
@@ -24,8 +25,6 @@ BrowserHistory::~BrowserHistory() {
 	tail->prev = head;
 }
 
-//THIS FUNCTION IS VERY MESSED UP
-//WORK ON IT
 
 //add node to linked list
 void BrowserHistory::visitSite(Webpage newSite) {
@@ -35,8 +34,11 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	fullHistory.push_front(newSite);
 
 	//create new node with pointer p
-	Webpage *p = new Webpage;
-	p->setInfo(newSite);
+	//Webpage *p = new Webpage;
+	
+	Node *p = new Node;
+	//p is a node which has a private member of webpage which as a function setInfo
+	p->site->setInfo(newSite);
 	//find old final node with pointer q
 
 	//4 Cases for adding sites
@@ -59,7 +61,8 @@ void BrowserHistory::visitSite(Webpage newSite) {
 
 	//cursor at the end (nonempty)
 	else if ((cursor == tail) && (head != NULL)) {
-		Webpage *q;
+		//Webpage *q;
+		Node *q;
 		//q is a pointer to the last node in the list
 		q = tail;
 		//make q point to p
@@ -78,16 +81,34 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	//somewhere else
 	else
 	{
-		//delete all next elements
-		Webpage *r = cursor;
-		Webpage *delCursor = tail;
+		////delete all next elements
+		//Webpage *r = cursor;
+		//Webpage *delCursor = tail;
+		//while (delCursor != cursor) {
+		//	Webpage *temp = delCursor;
+		//	delCursor = delCursor->prev;
+		//	delete temp;
+		//	numVisited--;
+		//}
+		//r->next = new Webpage;
+		//cursor = r->next;
+		//cursor->next = NULL;
+		//numVisited++;
+
+		////sets information for next site
+		////need to check to make easier to understand
+		//r = r->next;
+		//r->setInfo(newSite);
+		
+		Node *r = cursor;
+		Node *delCursor = tail;
 		while (delCursor != cursor) {
-			Webpage *temp = delCursor;
+			Node *temp = delCursor;
 			delCursor = delCursor->prev;
 			delete temp;
 			numVisited--;
 		}
-		r->next = new Webpage;
+		r->next = new Node;
 		cursor = r->next;
 		cursor->next = NULL;
 		numVisited++;
@@ -95,7 +116,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		//sets information for next site
 		//need to check to make easier to understand
 		r = r->next;
-		r->setInfo(newSite);
+		r->site->setInfo(newSite);
 	}
 
 }
@@ -219,7 +240,17 @@ void BrowserHistory::printBackSites() {
 	cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
 	}*/
 
-	Webpage *dispCursor = head;
+	//Webpage *dispCursor = head;
+	////need to add case if dispCursor starts as equal to the cursor so the single node data is printed
+	////only changing it to a do-while won't work, because dispCursor might try to access NULL->next
+	//if (numVisited == 0) {
+	//	cout << "List is empty, no sites to display" << endl;
+	//while (dispCursor != cursor) {
+
+	//	cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+	//	dispCursor = dispCursor->next;
+	//}
+	Node *dispCursor = head;
 	//need to add case if dispCursor starts as equal to the cursor so the single node data is printed
 	//only changing it to a do-while won't work, because dispCursor might try to access NULL->next
 	if (numVisited == 0) {
@@ -229,7 +260,7 @@ void BrowserHistory::printBackSites() {
 	
 	while (dispCursor != cursor) {
 
-		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+		cout << "Site URL: " << dispCursor->site->url << endl << "Time Visited: " << dispCursor->site->time << endl << endl;
 		dispCursor = dispCursor->next;
 	}
 }
@@ -242,7 +273,21 @@ void BrowserHistory::printForwardSites() {
 	}*/
 
 
-	Webpage *dispCursor = tail;
+	//Webpage *dispCursor = tail;
+
+	//if (numVisited == 0) {
+	//	cout << "List is empty, no sites to display" << endl;
+	//}
+
+
+	//while (dispCursor != cursor->prev) {
+
+//		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+//		dispCursor = dispCursor->prev;
+//	}
+	
+	
+	Node *dispCursor = tail;
 
 	if (numVisited == 0) {
 		cout << "List is empty, no sites to display" << endl;
@@ -251,7 +296,7 @@ void BrowserHistory::printForwardSites() {
 
 	while (dispCursor != cursor->prev) {
 
-		cout << "Site URL: " << dispCursor->url << endl << "Time Visited: " << dispCursor->time << endl << endl;
+		cout << "Site URL: " << dispCursor->site->url << endl << "Time Visited: " << dispCursor->site->time << endl << endl;
 		dispCursor = dispCursor->prev;
 	}
 }
