@@ -22,8 +22,11 @@ private:
 	string url;
 
 	// adds functionality of webpage as a node
-	Webpage* next;
-	Webpage* prev;
+	
+	//removing for now to see if i can bugfix this
+	//Webpage* next;
+	//Webpage* prev;
+	
 	friend class BrowserHistory;
 };
 
