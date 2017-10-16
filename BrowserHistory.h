@@ -8,6 +8,15 @@
 #include "Webpage.h"
 using namespace std;
 
+class Node{
+	public:
+		Node(Webpage elem = Webpage(), Node* link1 = NULL, Node* link2 = NULL):site(elem), next(link1), prev(link2){};
+	private:
+		Webpage site;
+		Node* next;
+		Node* prev;
+		friend class BrowserHistory;
+	}
 
 
 //In this case, BrowserHistory is the DLinkedList class
@@ -28,14 +37,17 @@ public:
 	void printBackSites();
 	void printForwardSites();
 	void printFullHistory();
+	
 
 private:
 	// Add private member variables for your class along with any
 	// other variables required to implement the public member functions
 	// TO BE COMPLETED
 	int numVisited;
-	Webpage *head;
-	Webpage *tail;
+	
+	//Webpage *head;
+	//Webpage *tail;
+	
 	//this list stores the full UNALTERED browser history based solely on time accessed
 	list<Webpage> fullHistory;
 	// full history will not delete elements, only add and does not need a cursor to change
@@ -43,5 +55,9 @@ private:
 
 	//cursor will be used with the navigation functions of back and forward to keep track of the current location
 	//LOOK AT CURSOR WITH REGARDS TO NECESSARY FUNCTIONALITY NEEDED
-	Webpage *cursor;
+	//Webpage *cursor;
+	
+	Node *cursor;
+	Node* head;
+	Node* tail;
 };
