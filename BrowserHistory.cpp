@@ -37,11 +37,11 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	if (head->next == tail) {
 		Webpage *p = new Webpage;	 //Create new node with pointer p
 		p->setInfo(newSite);
-		cursor = p;					 //Update cursor.
-		head->next = cursor;		 //Insert new node into list between head and tail.		 
-		cursor->next = tail;
-		cursor->prev = head;		 //Set link between new node and sentinels.
-		tail->prev = cursor;		
+		head->next = p;				 //Insert new node into list between head and tail.
+		p->prev = head;				 //Set link between new node and sentinels.
+		p->next = tail;
+		tail->prev = p;
+		cursor = p;					 //Update cursor.	
 		numVisited++;
 		return;
 	}
@@ -50,10 +50,11 @@ void BrowserHistory::visitSite(Webpage newSite) {
 	else if (cursor->next == tail) {
 		Webpage *p = new Webpage;	//Create new node with pointer p.
 		p->setInfo(newSite);
-		cursor->next = p;			//Insert new node after cursor.
-		cursor = p;					//Update cursor.
-		cursor->next = tail;
-		tail->prev = cursor;		//Set link between new node and tail sentinel.
+		p->next = tail;
+		tail->prev = p;
+		p->prev = cursor;
+		cursor->next = p;
+		cursor = p;
 		numVisited++;
 		return;
 	}
@@ -69,14 +70,14 @@ void BrowserHistory::visitSite(Webpage newSite) {
 			delete temp;					//Remove link from list.
 			numVisited--;					//Need to decrement for every item deleted.
 		}
-
+		
 		Webpage *p = new Webpage;		//Create new node with pointer p.
 		p->setInfo(newSite);				
 		cursor->next = p;				//Insert new node after cursor.
 		p->prev = cursor;
+		p->next = tail;
+		tail->prev = p;					//Set link between new node and tail.
 		cursor = p;						//Update cursor.
-		cursor->next = tail;			
-		tail->prev = cursor;			//Set link between new node and tail.
 		numVisited++;
 	}
 }
@@ -98,7 +99,7 @@ size_t BrowserHistory::getNavSize() {
 //Move cursor back one link.
 string BrowserHistory::back() {
 	if (cursor->prev == head) //If the cursor is at the beggining link.
-		throw invalid_argument("Cursor already at the beggining of the list.\n");
+		throw invalid_argument("Cursor already at the beginning of the list.\n");
 	cursor = cursor->prev;	  //Move the cursor back one link (head and tail unchanged).
 	return cursor->url;
 }
@@ -116,24 +117,25 @@ string BrowserHistory::forward() {
 void BrowserHistory::readHistory(string fileName) {
 	ifstream myFile(fileName);
 	if (myFile.fail())
-		throw "Failed to open file.\n";
+	throw invalid_argument("Failed to open file.\n");
 
 	//Variables to store file data and insert them into nodes in list.
 	string command;
-	string url;
-	time_t timeVisited;
+	string url = "";
+	time_t timeVisited = 0;
 
-	while (myFile >> command) { //Until end of file is reached.
+	while (myFile >> command) {		//Until end of file is reached.
 		if (command[0] == 'f' || command[0] == 'F') //If command is forward.
 			forward();
 		else if (command[0] == 'b' || command[0] == 'B') //If command is back.
 			back();
 		else if (command[0] == 'n' || command[0] == 'N') { //If command is new site.
 			myFile >> url >> timeVisited;	 //Only then will url and time be read from text file.
-			visitSite(Webpage(url, timeVisited));
-			fullHistory.push_front(Webpage(url, timeVisited));
+			Webpage p(url, timeVisited);
+			visitSite(p);
 		}
 	}
+	myFile.close();
 }
 
 
@@ -143,8 +145,12 @@ void BrowserHistory::printBackSites() {
 		throw invalid_argument("There are no items in the browser history.\n");
 	Webpage *dispCursor = head;
 	while (dispCursor->next != cursor) {
-		cout << "Site URL: " << dispCursor->url << endl;
-		cout << "Time Visited: " << dispCursor->time << endl << endl;
+		if (dispCursor == head)
+			cout << "---Start List--- \n\n";
+		else {
+			cout << "Site URL: " << dispCursor->url << endl;
+			cout << "Time Visited: " << dispCursor->time << endl << endl;
+		}
 		dispCursor = dispCursor->next;		//Move cursor forward one link.
 	}
 }
@@ -154,20 +160,21 @@ void BrowserHistory::printForwardSites() {
 	if (head->next == tail)
 		throw invalid_argument("There are no items in the browser history.\n");
 	Webpage* dispCursor = cursor;
-	while (dispCursor->next != nullptr) {
+	while (dispCursor->next != tail) {
 		cout << "Site URL: " << dispCursor->url << endl;
 		cout << "Time Visited: " << dispCursor->time << endl << endl;
 		dispCursor = dispCursor->next;		//Move cursor forward one link.
 	}
-	cout << "Site URL: " << dispCursor->url << endl;
-	cout << "Time Visited: " << dispCursor->time << endl << endl;
+	cout << "---End List---\n";
 }
 
 
 //Prints the web browsing history.
 void BrowserHistory::printFullHistory() {
-	for (list<Webpage>::iterator i = fullHistory.begin(); i != fullHistory.end(); ++i) {
+	cout << "---Start List--- \n\n";
+	for (list<Webpage>::iterator i = fullHistory.begin(); i != fullHistory.end(); i++) {
 		cout << "Site URL: " << (*i).getURL() << endl;
-		cout << "Time Visited: " << (*i).getTime() << endl;
+		cout << "Time Visited: " << (*i).getTime() << endl << endl;
 	}
+	cout << "---End List--- \n\n";
 }
