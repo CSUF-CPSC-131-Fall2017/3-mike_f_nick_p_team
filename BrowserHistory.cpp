@@ -178,8 +178,4 @@ void BrowserHistory::printFullHistory() {
 		cout << "Time Visited: " << (*i).getTime() << endl << endl;
 	}
 	cout << "---End List--- \n\n";
-
-	for (list<Webpage>::iterator i = fullHistory.begin(); i != fullHistory.end(); ++i) {
-		cout << "Site URL: " << (*i).getURL() << endl << "Time Visited: " << (*i).getTime() << endl;
-	}
 }
