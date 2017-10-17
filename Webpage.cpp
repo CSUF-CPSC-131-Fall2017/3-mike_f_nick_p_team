@@ -8,7 +8,6 @@ Webpage::Webpage() {
 
 //initialized constructor
 Webpage::Webpage(const string& webpageURL, const time_t& timeVisited) {
-	// TO BE COMPLETED
 	url = webpageURL;
 	time = timeVisited;
 }
