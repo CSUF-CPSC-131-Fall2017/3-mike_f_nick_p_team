@@ -3,4 +3,4 @@ Project 2
 
 Group members:
 Michael Feldman mikef0007@csu.fullerton.edu
-Nick Posey
+Nicholas Posey nposey97@csu.fullerton.edu
