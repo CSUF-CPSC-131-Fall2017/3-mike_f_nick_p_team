@@ -88,7 +88,6 @@ void BrowserHistory::visitSite(Webpage newSite) {
 string BrowserHistory::getURL() {
 	if (numVisited == 0)
 		throw invalid_argument("No sites visited\n");
-}
 	return (cursor->url);
 }
 
