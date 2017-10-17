@@ -1,5 +1,6 @@
 #include "BrowserHistory.h"
 
+
 //Default constructor.
 BrowserHistory::BrowserHistory() {
 	numVisited = 0;
@@ -59,6 +60,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 		return;
 	}
 
+
 	//In the middle of list.
 	else
 	{
@@ -86,6 +88,7 @@ void BrowserHistory::visitSite(Webpage newSite) {
 string BrowserHistory::getURL() {
 	if (numVisited == 0)
 		throw invalid_argument("No sites visited\n");
+}
 	return (cursor->url);
 }
 
@@ -94,7 +97,6 @@ string BrowserHistory::getURL() {
 size_t BrowserHistory::getNavSize() {
 	return numVisited;
 }
-
 
 //Move cursor back one link.
 string BrowserHistory::back() {
@@ -177,4 +179,8 @@ void BrowserHistory::printFullHistory() {
 		cout << "Time Visited: " << (*i).getTime() << endl << endl;
 	}
 	cout << "---End List--- \n\n";
+
+	for (list<Webpage>::iterator i = fullHistory.begin(); i != fullHistory.end(); ++i) {
+		cout << "Site URL: " << (*i).getURL() << endl << "Time Visited: " << (*i).getTime() << endl;
+	}
 }

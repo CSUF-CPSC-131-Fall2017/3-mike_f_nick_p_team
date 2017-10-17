@@ -8,6 +8,7 @@
 #include "Webpage.h"
 using namespace std;
 
+
 //BrowserHistory acts as a doubly linked list class.
 class BrowserHistory { 
 public:
